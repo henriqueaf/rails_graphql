@@ -33,4 +33,14 @@ class Types::UserType < Types::BaseObject
   def errors
     object.errors.map{|e| { field_name: e, errors: object.errors[e] }}
   end
+
+  # Method that says to GraphQL that this Type is or not visible
+  def self.visible?(context)
+    context[:current_user].present?
+  end
+
+  # Method that says to GraphQL that this Type is or not authorized
+  def self.authorized?(object, context)
+    object.first_name == "Joãooo"
+  end
 end
