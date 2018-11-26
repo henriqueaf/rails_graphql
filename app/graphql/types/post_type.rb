@@ -5,8 +5,4 @@ class Types::PostType < Types::BaseObject
   field :user_id, Int, null: false
   field :body, String, null: false
   field :comments, [Types::CommentType], null: true
-
-  def comments
-    object.comments
-  end
 end

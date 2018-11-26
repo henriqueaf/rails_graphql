@@ -20,6 +20,7 @@ class Types::UserType < Types::BaseObject
   field :full_name, String, null: true
   field :full_address, String, null: true
   field :posts, [Types::PostType], null: true
+  field :errors, [Types::ErrorType], null: true
 
   def full_name
     object.first_name.concat(" " + object.last_name)
@@ -29,7 +30,7 @@ class Types::UserType < Types::BaseObject
     object.street.concat(" " + object.city).concat(" " + object.country)
   end
 
-  def posts
-    object.posts
+  def errors
+    object.errors.map{|e| { field_name: e, errors: object.errors[e] }}
   end
 end
