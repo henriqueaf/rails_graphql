@@ -6,7 +6,6 @@ module Types
     field :user, Types::UserType, null: true, description: "Show single user" do
       argument :id, ID, required: true
     end
-
     def user(id:)
       User.find(id)
     end
@@ -14,13 +13,11 @@ module Types
     field :post, Types::PostType, null: true, description: "Show single post" do
       argument :id, ID, required: true
     end
-
     def post(id:)
       Post.find(id)
     end
 
     field :all_posts, [Types::PostType], null: true, description: "Show all Posts"
-
     def all_posts
       Post.all
     end
@@ -39,6 +36,12 @@ module Types
     field :whoami, Types::UserType, null: true, description: "Return looged in user"
     def whoami
       context[:current_user]
+    end
+
+    field :logout, Boolean, null: false, description: "Delete user session"
+    def logout
+      result = Session.where(id: context[:session_id]).destroy_all
+      result.any?
     end
   end
 end

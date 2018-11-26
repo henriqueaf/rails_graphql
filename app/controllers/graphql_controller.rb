@@ -5,8 +5,8 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     set_session
     context = {
-      time: Time.current,
-      current_user: @session&.user
+      current_user: @session&.user,
+      session_id: @session&.id
     }
     result = RailsGraphqlSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
