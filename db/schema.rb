@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_21_153756) do
+ActiveRecord::Schema.define(version: 2018_11_26_015937) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "post_id"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 2018_11_21_153756) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -37,6 +45,9 @@ ActiveRecord::Schema.define(version: 2018_11_21_153756) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email"
+    t.string "password_digest"
+    t.boolean "is_admin"
   end
 
 end

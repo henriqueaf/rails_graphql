@@ -24,5 +24,21 @@ module Types
     def all_posts
       Post.all
     end
+
+    field :login, String, null: true, description: "Login a user with credentials" do
+      argument :email, String, required: true
+      argument :password, String, required: true
+    end
+
+    def login(email:, password:)
+      if user = User.find_by(email: email)&.authenticate(password)
+        user.sessions.create.key
+      end
+    end
+
+    field :whoami, Types::UserType, null: true, description: "Return looged in user"
+    def whoami
+      context[:current_user]
+    end
   end
 end
