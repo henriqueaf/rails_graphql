@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/app/Dockerfile
-    image: rails_graphql:latest
+    image: henriqueaf/rails_graphql:latest
     container_name: rails_graphql_current
     command: sh ./scripts/start_production.sh # this command overrides default CMD on Dockerfile
     # ports: # do not need to export ports because nginx will be the interface with external access

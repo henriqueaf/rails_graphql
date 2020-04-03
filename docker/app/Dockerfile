@@ -1,5 +1,5 @@
 # ------------------ Ruby Base ------------------
-FROM ruby:2.5.0-alpine AS ruby-base
+FROM ruby:2.5.3-alpine AS ruby-base
 
 ENV APP_HOME="/rails_graphql" BUNDLE_PATH="$GEM_HOME"
 ENV RAILS_ENV="production"
