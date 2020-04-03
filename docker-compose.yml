@@ -1,0 +1,36 @@
+version: '3.3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    image: rails_graphql:latest
+    container_name: rails_graphql_current
+    command: sh ./scripts/start_production.sh # this command overrides default CMD on Dockerfile
+    # ports: # do not need to export ports because nginx will be the interface with external access
+    #   - '3000:3000'
+    # extra_hosts:
+    #   - "postgreshostname:172.17.0.2"
+    # network_mode: bridge # necessary to connect with external service like a runing postgres container
+    # external_links: # connects to an existing runing service (postgres on this case)
+    #   - postgres-11:postgresalias
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: dfab25995017ac4d3eb392afa3718991
+    volumes:
+      # /rails_graphql is the folder created for the application in Dockerfile
+      - static-content:/rails_graphql/public
+  nginx:
+    image: nginx:1.16-alpine
+    container_name: nginx_rails_graphql
+    ports:
+      - 80:80
+    volumes:
+      # use /var/www/rails_graphql/public folder inside the nginx.conf to configure the app
+      - static-content:/var/www/rails_graphql/public
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+volumes:
+  static-content:

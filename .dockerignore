@@ -1,0 +1,15 @@
+./.git
+./tmp
+./log
+./node_modules
+./coverage
+./dumps
+*.log
+
+./docker/*
+./Dockerfile*
+
+./public/system
+./public/assets
+./public/packs
+./public/packs-test
